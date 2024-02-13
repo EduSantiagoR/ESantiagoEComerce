@@ -1,0 +1,52 @@
+﻿@model Producto
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Productos</h1>
+<hr />
+<div>
+    <p>Puedes registrar un nuevo producto.</p>
+    <a href="@Url.Action("Form", "Producto")" class="btn btn-success">Nuevo +</a>
+</div>
+<hr />
+<div>
+    @if(Model.Productos != null)
+    {
+        if(Model.Productos.Count > 0)
+        {
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach(Producto pruduct in Model.Productos)
+                {
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@pruduct.Nombre</h5>
+                                <p class="card-text">@pruduct.Detalles</p>
+                                <p class="card-text">Costo: $ @pruduct.Precio</p>
+                                <p class="card-text">Disponible: @pruduct.Stock</p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-warning" href="@Url.Action("Form", "Producto", new {idProducto = pruduct.IdProducto})">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Producto", new {idProducto = pruduct.IdProducto})" onclick="return confirm('¿Seguro que quieres eliminar?')">
+                                    <i class="fa-solid fa-delete-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">No hay productos registrados.</div>
+        }
+    }
+    else
+    {
+        <div role="alert" class="alert alert-danger">No se han podido recuperar los productos. Es posible que el servicio no este funcionando correctamente.</div>
+    }
+</div>

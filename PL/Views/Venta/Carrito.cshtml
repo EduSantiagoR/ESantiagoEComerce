@@ -1,0 +1,66 @@
+﻿@model Venta
+@{
+    ViewData["Title"] = "Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Carrito</h1>
+<hr />
+<div>
+    @if(Model.Carrito != null)
+    {
+        if(Model.Carrito.Count > 0)
+        {
+            <div>
+                <a class="btn btn-success" href="@Url.Action("ClearCarrito", "Venta")">Limpiar carrito</a>
+            </div>
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Detalles</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(Producto producto in Model.Carrito)
+                    {
+                        <tr>
+                            <td>@producto.Nombre</td>
+                            <td>@producto.Detalles</td>
+                            <td>$ @producto.Precio</td>
+                            <td>@producto.Cantidad</td>
+                            <td>$ @(producto.Cantidad * producto.Precio)</td>
+                            <td>
+                                <a class="btn btn-danger" onclick="return confirm('¿Estas seguro de querer eliminar?')">
+
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                @{
+                    decimal total = 0;
+                    foreach(Producto produc in Model.Carrito)
+                    {
+                        total += (produc.Cantidad * produc.Precio);
+                    }
+                }
+                <h4>Total: $ @total</h4>
+            </div>
+            <div>
+                <p>Finalizar la compra</p>
+                <a class="btn btn-success" href="@Url.Action("Comprar", "Venta")">Comprar</a>
+            </div>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">Aún no has agregado productos a tu carrito.</div>
+        }
+    }
+</div>

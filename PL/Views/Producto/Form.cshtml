@@ -1,0 +1,40 @@
+﻿@model Producto
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario</h1>
+<hr />
+<div>
+    @using(Html.BeginForm("Form", "Producto", FormMethod.Post, new {enctype = "multipart/form-data" }))
+    {
+        <div class="align-content-center">
+            @Html.HiddenFor(model => model.IdProducto)
+            <div class="row mb-3">
+                <div class="col col-3">
+                    <label>Nombre</label>
+                    @Html.TextBoxFor(model => model.Nombre, "", new { @class = "form-control", @placeholder="Nombre" })
+                </div>
+                <div class="col col-3">
+                    <label>Detalles</label>
+                    @Html.TextBoxFor(model => model.Detalles, "", new { @class = "form-control", @placeholder = "Detalles" })
+                </div>
+                <div class="col col-3">
+                    <label>Precio</label>
+                    @Html.TextBoxFor(model => model.Precio, "", new { @class = "form-control", @placeholder = "0.0" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col col-3">
+                    <label>Stock</label>
+                    @Html.TextBoxFor(model => model.Stock, "", new { @class = "form-control", @placeholder = "0" })
+                </div>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-danger" href="@Url.Action("GetAll", "Producto")">Volver</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    }
+</div>
